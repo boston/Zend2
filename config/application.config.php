@@ -9,7 +9,8 @@ return array(
     'modules' => array(
         'Application',
         'Album',
-        'Auth'
+        'Auth',
+        'Permission'
     ),
     'module_listener_options' => array(
         'module_paths' => array(

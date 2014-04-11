@@ -23,6 +23,7 @@ class AlbumController extends AbstractActionController
 					$identity = $this->authservice->getIdentity();
 					return new ViewModel(array(
 							'albums' => $this->getAlbumTable()->fetchAll(),
+							'personne' => $identity,
 					));
 			 }
 			 return $this->redirect()->toRoute('auth');
