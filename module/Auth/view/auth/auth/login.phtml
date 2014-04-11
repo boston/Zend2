@@ -8,16 +8,35 @@ $form->setAttribute('action', $this->url(
 		)
 ));
 $form->prepare();
+echo $this->form()->openTag($form);
+?>
+  
+<div class="row" align="center">
+
+<div class="col-md-4">
+<div class="panel panel-default">
+<div class="panel-heading">
+	<h3 class="panel-title"><?php echo $this->translate('Connexion') ?></h3>
+ </div>
+	<div class="panel-body" align="center">
+<?php		
+			echo "<br>";
+			  if ($this->messages){
+			  	echo '<ul>';
+			  	foreach($this->messages as $message)
+			  	{
+			  		echo '<li>'.$message.'</li>';
+			  	}
+			  	echo '</ul>';
+			  } 
+			 echo $this->formRow($form->get('username'));?></br>
+			<?php echo $this->formRow($form->get('password'));?></br>
+			<?php echo $this->formRow($form->get('remember'));?> </br> <a href="#">Mot de passe oubli&eacute; ?</a></br></br>
+			<?php echo $this->formRow($form->get('submit'));
+			 echo $this->form()->closeTag();?>
+	         </div>
+        </div>
+    </div>
+ </div>
  
- echo $this->form()->openTag($form);
- echo $this->formCollection($form);
- echo $this->form()->closeTag();
-  echo "<br>";
-  if ($this->messages){
-  	echo '<ul>';
-  	foreach($this->messages as $message)
-  	{
-  		echo '<li>'.$message.'</li>';
-  	}
-  	echo '</ul>';
-  }
+

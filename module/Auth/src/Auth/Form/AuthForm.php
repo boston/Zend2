@@ -25,17 +25,17 @@ class AuthForm extends Form
 				),
 		));
 		$this->add(array(
-				'name' => 'submit',
+				'name' => 'remember',
 				'type' => 'Checkbox',
 				'options' => array(
-						'label' => 'Se souvenir de moi',
+						'label' => 'Se souvenir de moi ',
 				),
 		));
 		$this->add(array(
 				'name' => 'submit',
 				'type' => 'Submit',
 				'attributes' => array(
-						'value' => 'Connexion',
+						'value' => 'Me connecter',
 						'id' => 'submitbutton',
 				),
 		));
