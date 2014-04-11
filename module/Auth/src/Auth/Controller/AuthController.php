@@ -2,7 +2,6 @@
 namespace Auth\Controller;
 
 use Zend\Mvc\Controller\AbstractActionController;
-use Zend\Form\Annotation\AnnotationBuilder;
 use Zend\View\Model\ViewModel;
 use Auth\Form\AuthForm;
 use Auth\Model\User;
@@ -36,6 +35,7 @@ class AuthController extends AbstractActionController
 	public function getForm()
 	{	
 		$form = new AuthForm();
+		$user = new User();
 		$request = $this->getRequest();
  		if ($request->isPost()) {
  			$user = new User();
@@ -45,16 +45,20 @@ class AuthController extends AbstractActionController
  				
  			}
  		}
-		return array('form' => $form);
+		//return array('form' => $form);
+ 		return array(
+ 				'form'      => $form,
+ 				'messages'  => $this->flashmessenger()->getMessages()
+ 		);
 		
 	}
 	 
 	public function loginAction()
 	{
 		//if already login, redirect to success page
-// 		if ($this->getAuthService()->hasIdentity()){
-// 			return $this->redirect()->toRoute('album');
-// 		}
+		if ($this->getAuthService()->hasIdentity()){
+			return $this->redirect()->toRoute('album');
+		}
 		 
 		return $this->form = $this->getForm();
 
@@ -63,12 +67,13 @@ class AuthController extends AbstractActionController
 	public function authenticateAction()
 	{
  		$redirect = 'auth';
-// 		$form = new AuthForm();
+ 		$form = $this->getForm();
+ 		$request = $this->getRequest();
+ 	
   		$request = $this->getRequest();
-//  		if ($request->isPost()) {
-//  			$user = new User();
-//  			$form->setInputFilter($user->getInputFilter());
-//  			$form->setData($request->getPost());
+  		if ($request->isPost()) {
+ // 			$form->setData($request->getPost());
+  			
 //			if ($this->form->isValid()){
 				//check authentication...
 				$this->getAuthService()->getAdapter()
@@ -94,17 +99,17 @@ class AuthController extends AbstractActionController
 					$this->getAuthService()->getStorage()->write($request->getPost('username'));
 				}
 			//}
-		//}
+		}
 		 
 		return $this->redirect()->toRoute($redirect);
 	}
 	 
 	public function logoutAction()
 	{
-// 		$this->getSessionStorage()->forgetMe();
-// 		$this->getAuthService()->clearIdentity();
+		$this->getSessionStorage()->forgetMe();
+		$this->getAuthService()->clearIdentity();
 		 
-// 		$this->flashmessenger()->addMessage("You've been logged out");
-// 		return $this->redirect()->toRoute('login');
+		$this->flashmessenger()->addMessage("You've been logged out");
+		return $this->redirect()->toRoute('auth');
 	}
 }

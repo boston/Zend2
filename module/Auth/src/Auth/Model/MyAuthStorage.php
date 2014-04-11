@@ -16,4 +16,9 @@ class MyAuthStorage extends Storage\Session
 	{
 		$this->session->getManager()->forgetMe();
 	}
+	
+	
+	public function VeriConnect(){
+		
+	}
 }

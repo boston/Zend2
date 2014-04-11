@@ -6,16 +6,26 @@ use Zend\Mvc\Controller\AbstractActionController;
 use Zend\View\Model\ViewModel;
 use Album\Model\Album;  
 use Album\Form\AlbumForm;
+use Auth\Controller\AuthController;
 
 class AlbumController extends AbstractActionController
 {
 	protected $albumTable;
+	protected $authservice;
 	
 	public function indexAction()
-	{
-		return new ViewModel(array(
-				'albums' => $this->getAlbumTable()->fetchAll(),
-		));
+	{ 
+		$this->authservice = $this->getServiceLocator()
+		->get('AuthService');
+		
+		if ($this->authservice->hasIdentity()) {
+					// Identity exists; get it
+					$identity = $this->authservice->getIdentity();
+					return new ViewModel(array(
+							'albums' => $this->getAlbumTable()->fetchAll(),
+					));
+			 }
+			 return $this->redirect()->toRoute('auth');
 	}
 
 	public function addAction()
